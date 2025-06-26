@@ -1,6 +1,5 @@
 import React from "react";
-import Card from "./Card";
-import Navbar from "./Navbar";
+import Card from "../Templates/Card";
 import { useSelector } from "react-redux";
 
 const Dashboard = () => {
@@ -10,22 +9,15 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+     <div className="flex justify-center">
 
       <main className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* <Card className="col-span-1 md:col-span-2">
-          <CardContent className="p-6">
-            <h2 className="text-xl font-semibold mb-4">Welcome Back, Ankit!</h2>
-            <p className="text-gray-600">
-              Continue your learning journey. Here’s a quick look at your
-              progress and recommended courses.
-            </p>
-          </CardContent>
-        </Card> */}
+
         <Card
           title={`Welcome Back,  ${user.firstName}`}
           description="Continue your learning journey. Here’s a quick look at your
               progress and recommended courses."
+          showButton={false}
         />
 
         {/* <Card>
@@ -38,8 +30,8 @@ const Dashboard = () => {
             </ul>
           </CardContent>
         </Card> */}
-
-        {/* <Card className="md:col-span-3">
+        {/* 
+        <Card className="md:col-span-3">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold mb-4">Recommended Courses</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -65,6 +57,7 @@ const Dashboard = () => {
           </CardContent>
         </Card> */}
       </main>
+    </div>
     </div>
   );
 };

@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import skillhublogo from "../../skillhublogo.png";
+import { logout } from "../../store/authSlice";
 
 function Navbar() {
   const dropdownRef = useRef();
   const [open, setOpen] = useState(false);
   //   const [username, SetUserName] = useState("");
   const user = useSelector((state) => state.auth.data?.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -26,31 +30,46 @@ function Navbar() {
 
     const firstInitial = firstName.charAt(0).toUpperCase() || "";
     const lastInitial = lastName.charAt(0).toUpperCase() || "";
-    console.log(user);
     return firstInitial + lastInitial;
+  };
+
+  const logoutUser = async () => {
+    await dispatch(logout());
+    navigate("/", { replace: true });
   };
 
   return (
     <div>
       <nav className="flex items-center justify-between px-6 py-4 bg-white shadow">
         <div className="flex items-center gap-2">
-          <img
-            src="/skillhublogo.png"
-            alt="SkillHub Logo"
-            className="h-10 w-10"
-          />
+          <img src={skillhublogo} alt="SkillHub Logo" className="h-20 w-30" />
         </div>
 
         <div className="flex gap-6 text-gray-700 font-medium">
-          <Link to="/dashboard" className="hover:text-blue-700">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? "text-blue-700 font-semibold" : "hover:text-blue-700"
+            }
+          >
             Dashboard
-          </Link>
-          <Link to="/courses" className="hover:text-blue-700">
+          </NavLink>
+          <NavLink
+            to="/courses"
+            className={({ isActive }) =>
+              isActive ? "text-blue-700 font-semibold" : "hover:text-blue-700"
+            }
+          >
             Explore Courses
-          </Link>
-          <Link to="/mylearnings" className="hover:text-blue-700">
+          </NavLink>
+          <NavLink
+            to="/mylearnings"
+            className={({ isActive }) =>
+              isActive ? "text-blue-700 font-semibold" : "hover:text-blue-700"
+            }
+          >
             My Learnings
-          </Link>
+          </NavLink>
         </div>
 
         <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -63,22 +82,29 @@ function Navbar() {
 
           {open && (
             <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-              {/* <div className="py-2 px-4 text-sm text-gray-700 border-b">
-                {name}
-              </div> */}
               <ul className="py-1 text-sm text-gray-700">
+                {(user?.role === "Admin" || user?.role === "Mentor") && (
+                  <li>
+                    <button
+                      onClick={() => navigate("/addcourse")}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    >
+                      Add Course
+                    </button>
+                  </li>
+                )}
+                {user?.role === "Admin" && (
+                  <li>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                      Manage User
+                    </button>
+                  </li>
+                )}
                 <li>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                    Create User
-                  </button>
-                </li>
-                <li>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                    Add Course
-                  </button>
-                </li>
-                <li>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                  <button
+                    onClick={logoutUser}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                  >
                     Logout
                   </button>
                 </li>

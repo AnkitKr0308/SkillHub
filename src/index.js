@@ -9,30 +9,54 @@ import Home from "../src/pages/Home";
 import Signup from "./pages/Signup";
 import store from "./store/store";
 import Login from "./pages/Login";
-import Dashboard from "./Layout/DashboardComponent";
+import Dashboard from "./pages/Dashboard";
+import Courses from "./pages/Courses";
+import AddCourse from "./pages/AddCourse";
+import ProtectedRoute from "./components/Authentication/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
     element: <App />,
     children: [
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
         path: "/dashboard",
-        element: <Dashboard />,
+
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/courses",
+        element: (
+          <ProtectedRoute>
+            <Courses />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/addcourse",
+        element: (
+          <ProtectedRoute>
+            <AddCourse />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -15,7 +15,7 @@ function Input({
         <div className="mb-5" key={field.id}>
           <label
             htmlFor={field.id}
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             {field.label}
           </label>

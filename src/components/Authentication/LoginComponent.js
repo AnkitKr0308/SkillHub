@@ -4,12 +4,14 @@ import Button from "../Templates/Button";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import Modal from "../Templates/Modal";
 
 function LoginComponent() {
   const [formData, SetFormData] = useState({});
   const [ErrorMsg, SetErrorMsg] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showModal, SetShowModal] = useState(true);
 
   const fields = [
     {
@@ -44,24 +46,34 @@ function LoginComponent() {
     }
   };
 
+  const closeModal = () => {
+    SetShowModal(false);
+    navigate(-1);
+  };
+
   return (
     <div>
-      <form className="max-w-sm mx-auto mt-10" onSubmit={handleSubmit}>
-        <header className="font-bold mb-3 text-3xl text-white bg-orange-600 rounded">
-          Login
-        </header>
-        {ErrorMsg && (
-          <label className="block mt-4 text-sm font-medium text-red-600 bg-red-100 border border-red-300 px-4 py-2 rounded">
-            {ErrorMsg}
-          </label>
-        )}
+      {showModal && (
+        <Modal header={"Login to your Account"} onClose={closeModal}>
+          <form className="max-w-sm mx-auto mt-10" onSubmit={handleSubmit}>
+            {ErrorMsg && (
+              <label className="block mt-4 text-sm font-medium text-red-600 bg-red-100 border border-red-300 px-4 py-2 rounded">
+                {ErrorMsg}
+              </label>
+            )}
 
-        <Input fields={fields} formData={formData} onChange={handleChange} />
+            <Input
+              fields={fields}
+              formData={formData}
+              onChange={handleChange}
+            />
 
-        <div className="mt-6">
-          <Button label="Login" type="submit" />
-        </div>
-      </form>
+            <div className="mt-6">
+              <Button label="Login" type="submit" />
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }
