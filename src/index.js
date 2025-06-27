@@ -14,7 +14,7 @@ import Courses from "./pages/Courses";
 import AddCourse from "./pages/AddCourse";
 import ProtectedRoute from "./components/Authentication/ProtectedRoute";
 import MyLearnings from "./pages/MyLearnings";
-import CourseDetails from "./components/Layout/CourseDetails";
+import CourseData from "./pages/CourseData";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         path: `/my-learning/:courseId`,
         element: (
           <ProtectedRoute>
-            <CourseDetails />
+            <CourseData />
           </ProtectedRoute>
         ),
       },

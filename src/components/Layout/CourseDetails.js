@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Input from "../Templates/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCourseDetails } from "../../store/courseSlice";
+import { enrollingcourse, fetchCourseDetails } from "../../store/courseSlice";
 import { useParams } from "react-router-dom";
+import Button from "../Templates/Button";
 
 function CourseDetails() {
   const dispatch = useDispatch();
@@ -78,7 +79,7 @@ function CourseDetails() {
     {
       id: "comments",
       name: "comments",
-      label: "Comments",
+      label: "Provide Feedback:",
       readOnly: false,
       type: "textarea",
 
@@ -103,11 +104,26 @@ function CourseDetails() {
     SetFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const postComment = async (e) => {
+    e.preventDefault();
+    const { id, value } = e.target;
+
+    try {
+      await dispatch(enrollingcourse(formData));
+      SetFormData((prev) => ({ ...prev, [id]: value }));
+      alert("Thank you for the feedback");
+    } catch (error) {
+      alert("Error updating comment");
+      console.log("Error updating comment", error);
+    }
+  };
+
   const visibleFields = fields.filter(
     (field) =>
-      formData[field.id] !== null &&
-      formData[field.id] !== "" &&
-      formData[field.id] !== undefined
+      field.id === "comments" ||
+      (formData[field.id] !== null &&
+        formData[field.id] !== "" &&
+        formData[field.id] !== undefined)
   );
 
   return (
@@ -121,6 +137,9 @@ function CourseDetails() {
           formData={formData}
           onChange={onCommentChange}
         />
+        <div className="flex justify-end mt-4">
+          <Button type="button" onClick={postComment} label={"Post Comment"} />
+        </div>
       </div>
     </div>
   );
