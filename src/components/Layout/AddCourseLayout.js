@@ -14,7 +14,12 @@ function AddCourseLayout() {
 
   const fields = [
     { id: "title", label: "Title", required: true },
-    { id: "description", label: "Description", required: true },
+    {
+      id: "description",
+      label: "Description",
+      required: true,
+      type: "textarea",
+    },
     { id: "articleLink1", label: "Article 1", required: true, type: "url" },
     { id: "articleLink2", label: "Article 2", type: "url" },
     { id: "articleLink3", label: "Article 3", type: "url" },
@@ -55,7 +60,7 @@ function AddCourseLayout() {
               formData={formData}
               onChange={handleChange}
             />
-            <Button type="submit" label="Add Course" />
+            <Button className="mt-6" type="submit" label="Add Course" />
           </form>
         </Modal>
       )}

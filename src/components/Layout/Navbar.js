@@ -63,7 +63,7 @@ function Navbar() {
             Explore Courses
           </NavLink>
           <NavLink
-            to="/mylearnings"
+            to="/my-learning"
             className={({ isActive }) =>
               isActive ? "text-blue-700 font-semibold" : "hover:text-blue-700"
             }

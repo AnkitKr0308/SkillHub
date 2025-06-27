@@ -1,10 +1,7 @@
 import React from "react";
 
-function Card({ title, description, buttonText, onButtonClick, showButton=true }) {
-
-  
-
- return (
+function Card({ title, description, buttonText, onButtonClick, children }) {
+  return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 flex flex-col h-60">
       {/* h-72 sets fixed height; adjust as needed */}
 
@@ -16,8 +13,9 @@ function Card({ title, description, buttonText, onButtonClick, showButton=true }
           {description}
         </p>
       </div>
+      {children}
 
-      {showButton && (
+      {/* {showButton && (
         <div className="px-6 py-4">
           <button
             onClick={onButtonClick}
@@ -26,7 +24,7 @@ function Card({ title, description, buttonText, onButtonClick, showButton=true }
             {buttonText}
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

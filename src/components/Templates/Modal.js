@@ -20,7 +20,7 @@ function Modal({ header, children, onClose }) {
           </button>
         </div>
 
-        <div className="p-4 overflow-y-auto max-h-[70vh]">{children}</div>
+        <div className="p-4 overflow-y-auto max-h-[70vh] dark:bg-gray-900">{children}</div>
       </div>
     </div>
   );

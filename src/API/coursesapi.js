@@ -33,3 +33,55 @@ export const addCourse = async (formData) => {
     console.error("Error adding course", addCourse);
   }
 };
+
+export const fetchEnrolledCourses = async (userId) => {
+  try {
+    const response = await fetch(
+      `${base_url}/EnrolledCourses?UserId=${userId}`
+    );
+
+    if (response) {
+      return response.json();
+    } else {
+      return "Error fetching enrolled courses details";
+    }
+  } catch (error) {
+    console.error("Error fetching enrolled courses", error);
+  }
+};
+
+export const enrollCourse = async (formData) => {
+  try {
+    const response = await fetch(`${base_url}/EnrolledCourses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result?.message || "Failed to enroll course");
+    }
+    return result;
+  } catch (error) {
+    console.error("Error enrolling course", error);
+  }
+};
+
+export const getCourseDetails = async (userId, courseId) => {
+  try {
+    const response = await fetch(
+      `${base_url}/CourseDetails?userId=${userId}&courseId=${courseId}`
+    );
+
+    if (!response.ok) {
+      console.error("Error fetching courses", response.message);
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching course data", error);
+  }
+};

@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { addCourse, getCourses } from "../API/coursesapi";
+import {
+  addCourse,
+  enrollCourse,
+  fetchEnrolledCourses,
+  getCourseDetails,
+  getCourses,
+} from "../API/coursesapi";
 
 export const fetchAllCourses = createAsyncThunk(
   "courses/getCourses",
@@ -14,6 +20,30 @@ export const addCourseDetails = createAsyncThunk(
   "courses/addcourse",
   async (formData) => {
     const data = await addCourse(formData);
+    return data;
+  }
+);
+
+export const getEnrolledCourses = createAsyncThunk(
+  "courses/getenrolledcourses",
+  async ({ userId, courseId }) => {
+    const data = await fetchEnrolledCourses(userId, courseId);
+    return data;
+  }
+);
+
+export const enrollingcourse = createAsyncThunk(
+  "courses/enrollcourse",
+  async (formData) => {
+    const data = await enrollCourse(formData);
+    return data;
+  }
+);
+
+export const fetchCourseDetails = createAsyncThunk(
+  "courses/coursedetails",
+  async ({userId, courseId}) => {
+    const data = await getCourseDetails(userId, courseId);
     return data;
   }
 );
@@ -50,6 +80,39 @@ const courseSlice = createSlice({
         }
       })
       .addCase(addCourseDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getEnrolledCourses.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEnrolledCourses.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(getEnrolledCourses.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(enrollingcourse.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(enrollingcourse.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data.push(action.payload);
+      })
+      .addCase(enrollingcourse.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchCourseDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCourseDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchCourseDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

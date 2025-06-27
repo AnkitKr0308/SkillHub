@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import AddCourse from "./pages/AddCourse";
 import ProtectedRoute from "./components/Authentication/ProtectedRoute";
+import MyLearnings from "./pages/MyLearnings";
+import CourseDetails from "./components/Layout/CourseDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -55,6 +57,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <AddCourse />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/my-learning",
+        element: (
+          <ProtectedRoute>
+            <MyLearnings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: `/my-learning/:courseId`,
+        element: (
+          <ProtectedRoute>
+            <CourseDetails />
           </ProtectedRoute>
         ),
       },
