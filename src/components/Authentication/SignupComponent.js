@@ -5,15 +5,13 @@ import Dropdown from "../Templates/Dropdown";
 import Button from "../Templates/Button";
 import { createAccount } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
 import Modal from "../Templates/Modal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignupComponent() {
   const [showModal, SetShowModal] = useState(true);
   const [formData, SetFormData] = useState({});
   const [roles, SetRoles] = useState([]);
-  // const [successMsg, SetSuccessMsg] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,11 +51,7 @@ function SignupComponent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(createAccount(formData)).unwrap();
-    // if (result.success) {
-    //   SetSuccessMsg(true);
-    // } else {
-    //   SetSuccessMsg(false);
-    //   alert(result.message);
+
     navigate("/dashboard");
   };
 
@@ -79,7 +73,7 @@ function SignupComponent() {
 
   const closeModal = () => {
     SetShowModal(false);
-    navigate(-1);
+    navigate("/");
   };
 
   return (
@@ -87,9 +81,7 @@ function SignupComponent() {
       {showModal && (
         <Modal header={"Create An Account"} onClose={closeModal}>
           <form className="max-w-sm mx-auto mt-10" onSubmit={handleSubmit}>
-            {/* <header className="font-bold mb-3 text-3xl text-white bg-orange-600 rounded">
-          Create Your Account
-        </header> */}
+           
 
             <Input
               fields={fields}
@@ -111,20 +103,14 @@ function SignupComponent() {
             <div className="mt-6">
               <Button label="Submit" type="submit" />
             </div>
-            {/* {successMsg && (
-          <div className="mt-6 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
-            <p className="text-sm">
-              Your account has been successfully created.{" "}
-              <Link
-                to="/login"
-                className="font-semibold underline text-blue-600 hover:text-blue-800"
-              >
-                Log in
-              </Link>{" "}
-              to explore learnings!
-            </p>
-          </div>
-        )} */}
+            <div className="mt-6 flex justify-center">
+              <p className="text-white">
+                Already have an account?{" "}
+                <Link className="text-blue-500 underline" to="/login">
+                  Click here to login
+                </Link>
+              </p>
+            </div>
           </form>
         </Modal>
       )}

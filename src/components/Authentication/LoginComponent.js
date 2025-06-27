@@ -3,7 +3,7 @@ import Input from "../Templates/Input";
 import Button from "../Templates/Button";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Templates/Modal";
 
 function LoginComponent() {
@@ -48,7 +48,7 @@ function LoginComponent() {
 
   const closeModal = () => {
     SetShowModal(false);
-    navigate(-1);
+    navigate("/");
   };
 
   return (
@@ -70,6 +70,14 @@ function LoginComponent() {
 
             <div className="mt-6">
               <Button label="Login" type="submit" />
+            </div>
+            <div className="mt-6 flex justify-center">
+              <p className="text-white">
+                Don't have an account?{" "}
+                <Link className="text-blue-500 underline" to="/signup">
+                  Create Account
+                </Link>
+              </p>
             </div>
           </form>
         </Modal>
