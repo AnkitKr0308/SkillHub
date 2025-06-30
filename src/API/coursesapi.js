@@ -34,6 +34,26 @@ export const addCourse = async (formData) => {
   }
 };
 
+export const editCourse = async (courseId, formData) => {
+  try {
+    const response = await fetch(`${base_url}/EditCourse/${courseId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update course");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating course", error);
+  }
+};
+
 export const fetchEnrolledCourses = async (userId) => {
   try {
     const response = await fetch(
@@ -83,5 +103,22 @@ export const getCourseDetails = async (userId, courseId) => {
     return response.json();
   } catch (error) {
     console.error("Error fetching course data", error);
+  }
+};
+
+export const ArchiveCourse = async (courseId) => {
+  try {
+    const response = await fetch(`${base_url}/ArchiveCourse/${courseId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to archive course");
+    }
+    return await response.text();
+  } catch (error) {
+    console.error("Error archiving course", error);
   }
 };

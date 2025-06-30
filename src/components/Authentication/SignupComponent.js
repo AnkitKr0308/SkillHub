@@ -81,27 +81,30 @@ function SignupComponent() {
       {showModal && (
         <Modal header={"Create An Account"} onClose={closeModal}>
           <form className="max-w-sm mx-auto mt-10" onSubmit={handleSubmit}>
-           
-
             <Input
               fields={fields}
               formData={formData}
               onChange={handleChange}
             />
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Role
-            </label>
-            <Dropdown
-              id="RoleId"
-              items={roles}
-              selectable="true"
-              label="Roles"
-              onSelect={(value) =>
-                SetFormData((prev) => ({ ...prev, RoleId: value }))
-              }
-            />
+            <div className="flex items-center gap-28 mt-4 mb-4">
+              <label
+                htmlFor="RoleId"
+                className="text-sm font-medium text-gray-900 dark:text-white min-w-max"
+              >
+                Role
+              </label>
+              <Dropdown
+                id="RoleId"
+                items={roles}
+                selectable="true"
+                label="Roles"
+                onSelect={(value) =>
+                  SetFormData((prev) => ({ ...prev, RoleId: value }))
+                }
+              />
+            </div>
             <div className="mt-6">
-              <Button label="Submit" type="submit" />
+              <Button className="w-full" label="Submit" type="submit" />
             </div>
             <div className="mt-6 flex justify-center">
               <p className="text-white">

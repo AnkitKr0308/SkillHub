@@ -69,7 +69,7 @@ function LoginComponent() {
             />
 
             <div className="mt-6">
-              <Button label="Login" type="submit" />
+              <Button className="w-full" label="Login" type="submit" />
             </div>
             <div className="mt-6 flex justify-center">
               <p className="text-white">

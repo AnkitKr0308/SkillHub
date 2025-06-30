@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Templates/Card";
 import {
+  archivecourseslice,
   enrollingcourse,
   fetchAllCourses,
   getEnrolledCourses,
@@ -9,6 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../Templates/Button";
 import { useNavigate } from "react-router-dom";
+import EditCourse from "./EditCourse";
+import Modal from "../Templates/Modal";
 
 function ExploreCourse() {
   const [cardList, SetCardList] = useState([]);
@@ -16,7 +19,21 @@ function ExploreCourse() {
   const dispatch = useDispatch();
   const [enrolledcourses, SetEnrolledCourses] = useState([]);
   const [hoveredCourseId, SetHoveredCourseId] = useState(null);
+  const [selectedCourseId, SetSelectedCourseId] = useState(null);
+  const [showEditModal, SetShowEditModal] = useState(false);
+
   const navigate = useNavigate();
+
+  const closeModal = async (updatedcourse = null) => {
+    SetShowEditModal(false);
+    if (updatedcourse) {
+      SetCardList((prev) =>
+        prev.map((course) =>
+          course.courseId === updatedcourse.courseId ? updatedcourse : course
+        )
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -43,7 +60,8 @@ function ExploreCourse() {
       }
     };
     EnrolledCoursebyUser();
-  }, [dispatch, user.userId]);  
+  }, [dispatch, user.userId]);
+
   const exploreCard = async (courseId) => {
     const formData = {
       courseId: courseId,
@@ -62,6 +80,27 @@ function ExploreCourse() {
     }
   };
 
+  const handleEditCourse = async (courseId) => {
+    SetShowEditModal(true);
+    SetSelectedCourseId(courseId);
+  };
+
+  const handleArchiveCourse = async (courseId) => {
+    try {
+      const response = await dispatch(archivecourseslice(courseId)).unwrap();
+      if (response) {
+        SetCardList((prev) =>
+          prev.filter((card) => card.courseId !== courseId)
+        );
+        alert("Course deleted successfully!");
+      } else {
+        alert("Failed to delete course");
+      }
+    } catch (error) {
+      console.error("Error archiving course", error);
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
@@ -73,6 +112,12 @@ function ExploreCourse() {
                 key={card.courseId}
                 title={card.title}
                 description={card.description}
+                onEdit={() => {
+                  handleEditCourse(card.courseId);
+                }}
+                onDelete={() => {
+                  handleArchiveCourse(card.courseId);
+                }}
               >
                 <Button
                   label={
@@ -98,6 +143,11 @@ function ExploreCourse() {
             );
           })}
       </div>
+      {showEditModal && (
+        <Modal header="Edit Course" onClose={closeModal}>
+          <EditCourse courseId={selectedCourseId} onClose={closeModal} />
+        </Modal>
+      )}
     </div>
   );
 }

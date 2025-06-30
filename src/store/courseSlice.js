@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import {
   addCourse,
+  ArchiveCourse,
+  editCourse,
   enrollCourse,
   fetchEnrolledCourses,
   getCourseDetails,
@@ -40,11 +42,27 @@ export const enrollingcourse = createAsyncThunk(
   }
 );
 
+export const editCourseData = createAsyncThunk(
+  "courses/editcourse",
+  async ({ courseId, formData }) => {
+    const data = await editCourse(courseId, formData);
+    return data;
+  }
+);
+
 export const fetchCourseDetails = createAsyncThunk(
   "courses/coursedetails",
-  async ({userId, courseId}) => {
+  async ({ userId, courseId }) => {
     const data = await getCourseDetails(userId, courseId);
     return data;
+  }
+);
+
+export const archivecourseslice = createAsyncThunk(
+  "courses/archivecourse",
+  async (courseId) => {
+    await ArchiveCourse(courseId);
+    return courseId;
   }
 );
 
@@ -113,6 +131,38 @@ const courseSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchCourseDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(editCourseData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editCourseData.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.data.findIndex(
+          (course) => course.courseid === action.payload.id
+        );
+        if (index !== -1) {
+          state.data[index] = action.payload;
+        }
+      })
+      .addCase(editCourseData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(archivecourseslice.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(archivecourseslice.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.data.findIndex(
+          (course) => course.courseid === action.payload
+        );
+        if (index !== -1) {
+          state.data.splice(index, 1);
+        }
+      })
+      .addCase(archivecourseslice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
