@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Input from "../Templates/Input";
 import Button from "../Templates/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { editCourseData, fetchAllCourses, fetchCourseDetails } from "../../store/courseSlice";
+import {
+  editCourseData,
+  fetchAllCourses,
+  fetchCourseDetails,
+} from "../../store/courseSlice";
 
 function EditCourse({ courseId, onClose }) {
   const dispatch = useDispatch();
@@ -52,7 +56,6 @@ function EditCourse({ courseId, onClose }) {
       setFormData(data);
       onClose(data);
       alert(`${data.title} course updated successfully!`);
-
     } catch (error) {
       console.error(error);
     }
@@ -62,9 +65,9 @@ function EditCourse({ courseId, onClose }) {
     <div>
       <Input fields={fields} formData={formData} onChange={handleChange} />
       <Button
-        className="mt-6"
+        className="mt-6 w-full"
         type="button"
-        label="Save"
+        label="Update Course"
         onClick={handleSubmit}
       />
     </div>

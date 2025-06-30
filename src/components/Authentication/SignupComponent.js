@@ -3,7 +3,7 @@ import Input from "../Templates/Input";
 import { getRoles } from "../../API/authentication";
 import Dropdown from "../Templates/Dropdown";
 import Button from "../Templates/Button";
-import { createAccount } from "../../store/authSlice";
+import { createAccount, loginUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import Modal from "../Templates/Modal";
 import { Link, useNavigate } from "react-router-dom";
@@ -52,6 +52,7 @@ function SignupComponent() {
     e.preventDefault();
     await dispatch(createAccount(formData)).unwrap();
 
+    await dispatch(loginUser(formData)).unwrap();
     navigate("/dashboard");
   };
 

@@ -10,14 +10,28 @@ function EnrolledCourses() {
   const user = useSelector((state) => state.auth.data?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [count, SetCount] = useState();
 
   useEffect(() => {
     const fetchEnrolledData = async () => {
       const data = await dispatch(getEnrolledCourses({ userId: user.userId }));
       SetEnrolledCourses(data.payload);
+      if (data.payload.length === 0) {
+        SetCount(0);
+      }
     };
     fetchEnrolledData();
   }, [dispatch, user.userId]);
+
+  if (count === 0) {
+    return (
+      <div className="flex justify-center items-center mt-20">
+        <h1 className="text-2xl font-bold text-green-900">
+          You don't have any enrolled courses.
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center">
@@ -31,6 +45,7 @@ function EnrolledCourses() {
                 description={card.description}
               >
                 <Button
+                  className="w-3/4"
                   onClick={() => navigate(`/my-learning/${card.courseId}`)}
                   label={"Learn More..."}
                 />

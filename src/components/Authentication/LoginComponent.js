@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Templates/Input";
 import Button from "../Templates/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Templates/Modal";
@@ -12,6 +12,13 @@ function LoginComponent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showModal, SetShowModal] = useState(true);
+  const user = useSelector((state) => state.auth.data?.user);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  });
 
   const fields = [
     {

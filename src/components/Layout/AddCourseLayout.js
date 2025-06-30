@@ -60,7 +60,7 @@ function AddCourseLayout() {
               formData={formData}
               onChange={handleChange}
             />
-            <Button className="mt-6" type="submit" label="Add Course" />
+            <Button className="mt-6 w-full" type="submit" label="Add Course" />
           </form>
         </Modal>
       )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import skillhublogo from "../../skillhublogo.png";
 import { logout } from "../../store/authSlice";
 
@@ -42,7 +42,9 @@ function Navbar() {
     <div>
       <nav className="flex items-center justify-between px-6 py-4 bg-white shadow">
         <div className="flex items-center gap-2">
-          <img src={skillhublogo} alt="SkillHub Logo" className="h-20 w-30" />
+          <Link to="/">
+            <img src={skillhublogo} alt="SkillHub Logo" className="h-20 w-30" />
+          </Link>
         </div>
 
         <div className="flex gap-6 text-gray-700 font-medium">

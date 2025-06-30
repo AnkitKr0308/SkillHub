@@ -120,6 +120,7 @@ function ExploreCourse() {
                 }}
               >
                 <Button
+                  className="w-3/4"
                   label={
                     isEnrolled
                       ? hoveredCourseId === card.courseId

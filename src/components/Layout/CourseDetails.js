@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { enrollingcourse, fetchCourseDetails } from "../../store/courseSlice";
 import { useParams } from "react-router-dom";
 import Button from "../Templates/Button";
+import { type } from "@testing-library/user-event/dist/type";
 
 function CourseDetails() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function CourseDetails() {
       label: "Description",
       readOnly: true,
       className: "text-black",
+      type: "textarea",
     },
     {
       id: "articleLink1",

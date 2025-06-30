@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth.data?.user);
+  const capitalize = (str) => str?.charAt(0).toUpperCase() + str?.slice(1).toLowerCase();
 
   if (!user) return <div>Loading....</div>;
 
@@ -14,7 +15,7 @@ const Dashboard = () => {
       <main className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <Card
-          title={`Welcome Back,  ${user.firstName}`}
+          title={`Welcome Back,  ${capitalize(user.firstName)}`}
           description="Continue your learning journey. Here’s a quick look at your
               progress and recommended courses."
           showButton={false}
