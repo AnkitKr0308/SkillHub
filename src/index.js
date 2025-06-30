@@ -15,6 +15,7 @@ import AddCourse from "./pages/AddCourse";
 import ProtectedRoute from "./components/Authentication/ProtectedRoute";
 import MyLearnings from "./pages/MyLearnings";
 import CourseData from "./pages/CourseData";
+import Unauthorized from "./pages/Unauthorized";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
       {
         path: "/addcourse",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["Admin", "Mentor"]}>
             <AddCourse />
           </ProtectedRoute>
         ),
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
             <CourseData />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />,
       },
     ],
   },

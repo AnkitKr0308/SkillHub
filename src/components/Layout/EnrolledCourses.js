@@ -25,7 +25,7 @@ function EnrolledCourses() {
 
   if (count === 0) {
     return (
-      <div className="flex justify-center items-center mt-20">
+      <div className="p-6 text-center">
         <h1 className="text-2xl font-bold text-green-900">
           You don't have any enrolled courses.
         </h1>
