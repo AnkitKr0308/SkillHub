@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/Authentication/ProtectedRoute";
 import MyLearnings from "./pages/MyLearnings";
 import CourseData from "./pages/CourseData";
 import Unauthorized from "./pages/Unauthorized";
+import Users from "./pages/Users";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
       {
         path: "/unauthorized",
         element: <Unauthorized />,
+      },
+      {
+        path: "/users",
+        element: (
+          <ProtectedRoute allowedRoles={["Admin"]}>
+            <Users />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

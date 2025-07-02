@@ -72,7 +72,7 @@ function ExploreCourse() {
 
     try {
       await dispatch(enrollingcourse(formData));
-      console.log("Form data sent:", formData);
+
       SetEnrolledCourses((prev) => [...enrolledcourses, courseId]);
     } catch (error) {
       alert("Failed to enroll");

@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Dropdown({ label, items = [], selectable = false, onSelect }) {
+function Dropdown({ label, items = [], selectable = false, onSelect, selectedValue }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, SetSelectedLabel] = useState(label);
+
+  useEffect(() => {
+  if (selectedValue) {
+    const match = items.find((item) => item.value === selectedValue);
+    if (match) {
+      SetSelectedLabel(match.label);
+    }
+  } else {
+    SetSelectedLabel(label); 
+  }
+}, [selectedValue, items, label]);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -24,7 +35,7 @@ function Dropdown({ label, items = [], selectable = false, onSelect }) {
       >
         {selectedLabel}
         <span className="ml-2 text-gray-500">&#9662;</span>{" "}
-        {/* Downward arrow */}
+        
       </button>
 
       {isOpen && (

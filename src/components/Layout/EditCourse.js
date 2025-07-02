@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../Templates/Input";
 import Button from "../Templates/Button";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  editCourseData,
-  fetchAllCourses,
-  fetchCourseDetails,
-} from "../../store/courseSlice";
+import { editCourseData, fetchCourseDetails } from "../../store/courseSlice";
 
 function EditCourse({ courseId, onClose }) {
   const dispatch = useDispatch();
